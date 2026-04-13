@@ -75,7 +75,7 @@
             transition: all 0.4s;
         }
         .nav.scrolled .nav-logo { height: 32px; }
-        .nav:not(.scrolled) .nav-logo { filter: brightness(0) invert(1); }
+        .nav:not(.scrolled) .nav-logo { filter: drop-shadow(0 0 8px rgba(0,0,0,0.3)); }
         .nav-links {
             display: flex;
             align-items: center;
@@ -166,7 +166,7 @@
         .hero-logo-main {
             height: 90px;
             margin-bottom: 32px;
-            filter: brightness(0) invert(1);
+            filter: drop-shadow(0 2px 12px rgba(0,0,0,0.4));
             animation: heroFadeIn 1.2s ease-out;
         }
         .hero-headline {
@@ -701,7 +701,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        .footer-logo { height: 24px; filter: brightness(0) invert(1); opacity: 0.3; }
+        .footer-logo { height: 24px; opacity: 0.5; }
         .footer-text { font-size: 0.7rem; color: var(--gray-600); letter-spacing: 0.5px; }
         .footer-socials { display: flex; gap: 20px; }
         .footer-socials a { color: var(--gray-600); transition: color 0.3s; }
@@ -776,9 +776,95 @@
             .cta-contact { flex-direction: column; gap: 24px; }
             .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
         }
+        /* ===== LOGIN GATE ===== */
+        .login-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .login-gate.hidden { display: none; }
+        .login-box {
+            text-align: center;
+            max-width: 380px;
+            padding: 0 24px;
+        }
+        .login-logo {
+            height: 80px;
+            margin-bottom: 40px;
+        }
+        .login-title {
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+        .login-input {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--white);
+            font-family: var(--font);
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .login-input::placeholder { color: var(--gray-600); }
+        .login-input:focus { border-color: var(--red); }
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--white);
+            color: var(--black);
+            border: none;
+            font-family: var(--font);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background 0.3s;
+        }
+        .login-btn:hover { background: var(--gray-200); }
+        .login-error {
+            color: var(--red);
+            font-size: 0.78rem;
+            margin-top: 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .login-error.show { opacity: 1; }
+        .site-content { display: none; }
+        .site-content.unlocked { display: block; }
     </style>
 </head>
 <body>
+
+    <!-- LOGIN GATE -->
+    <div class="login-gate" id="loginGate">
+        <div class="login-box">
+            <img src="logo.png" alt="VS Auto Group" class="login-logo">
+            <div class="login-title">Acceso Restringido</div>
+            <input type="text" class="login-input" id="loginUser" placeholder="Usuario" autocomplete="off">
+            <input type="password" class="login-input" id="loginPass" placeholder="Contraseña">
+            <button class="login-btn" id="loginBtn">Entrar</button>
+            <div class="login-error" id="loginError">Usuario o contraseña incorrectos</div>
+        </div>
+    </div>
+
+    <!-- SITE CONTENT (hidden until login) -->
+    <div class="site-content" id="siteContent">
 
     <!-- NAV -->
     <nav class="nav" id="nav">
@@ -1110,7 +1196,41 @@
         </div>
     </footer>
 
+    </div><!-- /site-content -->
+
     <script>
+        // ===== LOGIN GATE =====
+        const loginGate = document.getElementById('loginGate');
+        const siteContent = document.getElementById('siteContent');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginUser = document.getElementById('loginUser');
+        const loginPass = document.getElementById('loginPass');
+        const loginError = document.getElementById('loginError');
+
+        // Check if already logged in this session
+        if (sessionStorage.getItem('vs_auth') === 'true') {
+            loginGate.classList.add('hidden');
+            siteContent.classList.add('unlocked');
+        }
+
+        function attemptLogin() {
+            const u = loginUser.value.trim();
+            const p = loginPass.value;
+            if (u === 'Salvajeycrudo' && p === 'Herrera2004') {
+                sessionStorage.setItem('vs_auth', 'true');
+                loginGate.classList.add('hidden');
+                siteContent.classList.add('unlocked');
+            } else {
+                loginError.classList.add('show');
+                loginPass.value = '';
+                setTimeout(() => loginError.classList.remove('show'), 3000);
+            }
+        }
+
+        loginBtn.addEventListener('click', attemptLogin);
+        loginPass.addEventListener('keydown', (e) => { if (e.key === 'Enter') attemptLogin(); });
+        loginUser.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginPass.focus(); });
+
         // Nav scroll — transparent to solid
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
