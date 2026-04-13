@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Auto Group — Vehículos Premium de Confianza</title>
+    <meta name="description" content="VS Auto Group: Venta de vehículos premium usados en excelente estado. BMW, Mercedes-Benz, Audi y más. Calidad, confianza y seguridad garantizada.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #0a0a0a;
+            --dark: #141414;
+            --gray-900: #1a1a1a;
+            --gray-800: #2a2a2a;
+            --gray-700: #3a3a3a;
+            --gray-600: #555;
+            --gray-500: #777;
+            --gray-400: #999;
+            --gray-300: #bbb;
+            --gray-200: #ddd;
+            --gray-100: #eee;
+            --white: #ffffff;
+            --off-white: #f5f5f5;
+            --accent: #c8c8c8;
+            --font-body: 'Inter', -apple-system, sans-serif;
+            --font-display: 'Playfair Display', Georgia, serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--gray-100); }
+        ::-webkit-scrollbar-thumb { background: var(--gray-700); border-radius: 4px; }
+
+        /* ===== UTILITIES ===== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            color: var(--black);
+            line-height: 1.2;
+        }
+        .section-title.light { color: var(--white); }
+
+        /* ===== REVEAL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+        }
+        .nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 0;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-logo {
+            height: 44px;
+            transition: filter 0.4s ease;
+        }
+        .nav.scrolled .nav-logo { height: 36px; }
+        .nav:not(.scrolled) .nav-logo { filter: brightness(0) invert(1); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .nav:not(.scrolled) .nav-links a { color: rgba(255,255,255,0.8); }
+        .nav:not(.scrolled) .nav-links a:hover { color: var(--white); }
+        .nav.scrolled .nav-links a { color: var(--gray-600); }
+        .nav.scrolled .nav-links a:hover { color: var(--black); }
+
+        .nav-cta {
+            padding: 10px 24px !important;
+            border: 1.5px solid;
+            border-radius: 0;
+            transition: all 0.3s !important;
+        }
+        .nav:not(.scrolled) .nav-cta {
+            border-color: rgba(255,255,255,0.4);
+            color: var(--white) !important;
+        }
+        .nav:not(.scrolled) .nav-cta:hover {
+            background: var(--white);
+            color: var(--black) !important;
+        }
+        .nav.scrolled .nav-cta {
+            border-color: var(--black);
+            color: var(--black) !important;
+        }
+        .nav.scrolled .nav-cta:hover {
+            background: var(--black);
+            color: var(--white) !important;
+        }
+
+        /* Mobile menu */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            transition: all 0.3s;
+        }
+        .nav:not(.scrolled) .nav-toggle span { background: var(--white); }
+        .nav.scrolled .nav-toggle span { background: var(--black); }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--black);
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.6) 100%),
+                url('https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=1920&q=80') center/cover no-repeat;
+            transform: scale(1.05);
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+        @keyframes heroZoom {
+            from { transform: scale(1.05); }
+            to { transform: scale(1.12); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 32px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--white);
+            border-radius: 50%;
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .hero h1 span {
+            font-style: italic;
+            font-weight: 400;
+        }
+        .hero-sub {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+            margin-bottom: 48px;
+            max-width: 520px;
+            font-weight: 300;
+        }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: var(--font-body);
+        }
+        .btn-primary {
+            background: var(--white);
+            color: var(--black);
+        }
+        .btn-primary:hover {
+            background: var(--gray-200);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 1.5px solid rgba(255,255,255,0.3);
+        }
+        .btn-outline:hover {
+            border-color: var(--white);
+            transform: translateY(-2px);
+        }
+        .btn-dark {
+            background: var(--black);
+            color: var(--white);
+        }
+        .btn-dark:hover {
+            background: var(--gray-800);
+            transform: translateY(-2px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .hero-scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            background: var(--black);
+            padding: 48px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray-500);
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 120px 0;
+            background: var(--white);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .about-image-wrapper {
+            position: relative;
+        }
+        .about-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            filter: grayscale(20%);
+        }
+        .about-image-accent {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid var(--gray-200);
+            z-index: -1;
+        }
+        .about-text { max-width: 480px; }
+        .about-text p {
+            color: var(--gray-600);
+            margin: 24px 0;
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+        .about-signature {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+        }
+        .about-signature-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--black);
+        }
+        .about-signature-role {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        /* ===== BRANDS ===== */
+        .brands {
+            padding: 80px 0;
+            background: var(--off-white);
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .brands-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .brands-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 64px;
+            flex-wrap: wrap;
+        }
+        .brand-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .brand-item:hover { opacity: 1; }
+        .brand-icon {
+            width: 72px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .brand-icon svg { width: 56px; height: 56px; fill: var(--gray-700); }
+        .brand-name {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        /* ===== INVENTORY ===== */
+        .inventory {
+            padding: 120px 0;
+            background: var(--white);
+        }
+        .inventory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 64px;
+        }
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .car-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            group: true;
+        }
+        .car-card-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--gray-100);
+        }
+        .car-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .car-card:hover .car-card-image img {
+            transform: scale(1.06);
+        }
+        .car-card-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            padding: 6px 14px;
+            background: var(--black);
+            color: var(--white);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .car-card-body { padding: 24px 0; }
+        .car-card-brand {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .car-card-name {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 12px;
+        }
+        .car-card-specs {
+            display: flex;
+            gap: 20px;
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-bottom: 16px;
+        }
+        .car-card-specs span { display: flex; align-items: center; gap: 6px; }
+        .car-card-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+        .car-card-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--gray-200);
+            margin-bottom: 16px;
+        }
+
+        /* ===== WHY US ===== */
+        .why {
+            padding: 120px 0;
+            background: var(--black);
+        }
+        .why-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+        .why-card {
+            text-align: center;
+            padding: 48px 32px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: border-color 0.4s;
+        }
+        .why-card:hover {
+            border-color: rgba(255,255,255,0.2);
+        }
+        .why-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .why-icon svg { width: 32px; height: 32px; stroke: var(--white); fill: none; stroke-width: 1.5; }
+        .why-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+        .why-card p {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ===== PROCESS ===== */
+        .process {
+            padding: 120px 0;
+            background: var(--off-white);
+        }
+        .process-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+        .process-step { position: relative; text-align: center; padding: 0 16px; }
+        .process-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gray-200);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        .process-step h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 12px;
+        }
+        .process-step p {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 28px;
+            right: -16px;
+            width: 32px;
+            height: 1px;
+            background: var(--gray-300);
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 120px 0;
+            background: var(--white);
+        }
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .testimonial-card {
+            padding: 40px;
+            border: 1px solid var(--gray-200);
+            transition: border-color 0.3s;
+        }
+        .testimonial-card:hover { border-color: var(--gray-400); }
+        .testimonial-stars {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 20px;
+        }
+        .testimonial-stars svg { width: 16px; height: 16px; fill: var(--black); }
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            font-style: italic;
+            font-weight: 300;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--black);
+        }
+        .testimonial-detail {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            padding: 120px 0;
+            background: var(--black);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, transparent 60%);
+        }
+        .cta-content { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; }
+        .cta .section-title { margin-bottom: 20px; }
+        .cta-sub {
+            font-size: 1rem;
+            color: var(--gray-500);
+            margin-bottom: 48px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+        .cta-contact {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px;
+        }
+        .cta-contact-item {
+            text-align: center;
+        }
+        .cta-contact-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+        .cta-contact-value {
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .cta-contact-value a {
+            color: var(--white);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        .cta-contact-value a:hover { opacity: 0.7; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 48px 0;
+            background: var(--black);
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-logo { height: 32px; filter: brightness(0) invert(1); opacity: 0.5; }
+        .footer-text {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            letter-spacing: 1px;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+        .footer-socials a {
+            color: var(--gray-600);
+            transition: color 0.3s;
+        }
+        .footer-socials a:hover { color: var(--white); }
+        .footer-socials svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 1024px) {
+            .inventory-grid { grid-template-columns: repeat(2, 1fr); }
+            .why-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-steps { grid-template-columns: repeat(2, 1fr); gap: 48px; }
+            .process-step::after { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-toggle { display: flex; }
+            .nav-links.active {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 32px;
+                z-index: 999;
+            }
+            .nav-links.active a {
+                color: var(--black) !important;
+                font-size: 1.1rem;
+            }
+            .nav-links.active .nav-cta {
+                border-color: var(--black) !important;
+                color: var(--black) !important;
+            }
+            .mobile-close {
+                display: none;
+                position: absolute;
+                top: 24px;
+                right: 24px;
+                background: none;
+                border: none;
+                font-size: 2rem;
+                cursor: pointer;
+                color: var(--black);
+            }
+            .nav-links.active .mobile-close { display: block; }
+
+            .hero h1 { font-size: 2.5rem; }
+            .hero-sub { font-size: 1rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+            .about-grid { grid-template-columns: 1fr; gap: 48px; }
+            .about-image { height: 350px; }
+            .about-image-accent { display: none; }
+            .inventory-grid { grid-template-columns: 1fr; }
+            .inventory-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+            .why-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .brands-grid { gap: 40px; }
+            .cta-contact { flex-direction: column; gap: 24px; }
+            .footer-inner { flex-direction: column; gap: 24px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="nav" id="nav">
+        <div class="container nav-inner">
+            <img src="logo.png" alt="VS Auto Group" class="nav-logo">
+            <ul class="nav-links" id="navLinks">
+                <button class="mobile-close" id="navClose">&times;</button>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#inventario">Inventario</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+                <li><a href="#opiniones">Opiniones</a></li>
+                <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-content">
+            <div class="hero-badge reveal">Vehículos Premium Certificados</div>
+            <h1 class="reveal reveal-delay-1">Lujo que se <span>siente</span> al volante</h1>
+            <p class="hero-sub reveal reveal-delay-2">Seleccionamos a mano cada vehículo. Solo los que cumplen nuestros estándares de calidad, mecánica y estética llegan a nuestro inventario.</p>
+            <div class="hero-actions reveal reveal-delay-3">
+                <a href="#inventario" class="btn btn-primary">Ver Inventario</a>
+                <a href="#contacto" class="btn btn-outline">Agenda tu Visita</a>
+            </div>
+        </div>
+        <a href="#stats" class="hero-scroll">
+            <span>Scroll</span>
+            <div class="hero-scroll-line"></div>
+        </a>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-bar" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="reveal">
+                    <div class="stat-number" data-count="150">0</div>
+                    <div class="stat-label">Vehículos Vendidos</div>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <div class="stat-number" data-count="98" data-suffix="%">0</div>
+                    <div class="stat-label">Clientes Satisfechos</div>
+                </div>
+                <div class="reveal reveal-delay-2">
+                    <div class="stat-number" data-count="5" data-suffix="+">0</div>
+                    <div class="stat-label">Años de Experiencia</div>
+                </div>
+                <div class="reveal reveal-delay-3">
+                    <div class="stat-number" data-count="30" data-suffix="+">0</div>
+                    <div class="stat-label">En Inventario Ahora</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image-wrapper reveal">
+                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80" alt="Showroom VS Auto Group" class="about-image">
+                    <div class="about-image-accent"></div>
+                </div>
+                <div class="about-text">
+                    <div class="section-label reveal">Sobre Nosotros</div>
+                    <h2 class="section-title reveal reveal-delay-1">No vendemos coches.<br>Entregamos <em>confianza</em>.</h2>
+                    <p class="reveal reveal-delay-2">En VS Auto Group creemos que comprar un vehículo premium usado no debería ser una apuesta. Por eso cada coche que entra en nuestro inventario pasa por una inspección rigurosa de más de 150 puntos.</p>
+                    <p class="reveal reveal-delay-3">Trabajamos con las marcas más reconocidas del mercado — BMW, Mercedes-Benz, Audi — y nos aseguramos de que cada unidad mantenga el nivel de lujo, rendimiento y seguridad que estas marcas representan.</p>
+                    <div class="about-signature reveal reveal-delay-4">
+                        <div class="about-signature-name">VS Auto Group</div>
+                        <div class="about-signature-role">Tu camino hacia el lujo accesible</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRANDS -->
+    <section class="brands">
+        <div class="container">
+            <div class="brands-header reveal">
+                <div class="section-label">Marcas que Trabajamos</div>
+            </div>
+            <div class="brands-grid reveal reveal-delay-1">
+                <div class="brand-item">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"/><path d="M50 5 L50 95 M5 50 L95 50" stroke="currentColor" stroke-width="3"/><text x="22" y="35" font-size="12" font-weight="bold" fill="currentColor">B</text><text x="55" y="35" font-size="12" font-weight="bold" fill="currentColor">M</text><text x="22" y="72" font-size="12" font-weight="bold" fill="currentColor">W</text></svg>
+                    </div>
+                    <span class="brand-name">BMW</span>
+                </div>
+                <div class="brand-item">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"/><polygon points="50,15 58,40 85,40 63,55 71,80 50,65 29,80 37,55 15,40 42,40" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+                    </div>
+                    <span class="brand-name">Mercedes-Benz</span>
+                </div>
+                <div class="brand-item">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"/><text x="50" y="58" text-anchor="middle" font-size="28" font-weight="bold" fill="currentColor">A</text></svg>
+                    </div>
+                    <span class="brand-name">Audi</span>
+                </div>
+                <div class="brand-item">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"/><text x="50" y="58" text-anchor="middle" font-size="20" font-weight="bold" fill="currentColor">LEX</text></svg>
+                    </div>
+                    <span class="brand-name">Lexus</span>
+                </div>
+                <div class="brand-item">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"/><text x="50" y="58" text-anchor="middle" font-size="18" font-weight="bold" fill="currentColor">POR</text></svg>
+                    </div>
+                    <span class="brand-name">Porsche</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INVENTORY -->
+    <section class="inventory" id="inventario">
+        <div class="container">
+            <div class="inventory-header">
+                <div>
+                    <div class="section-label reveal">Inventario Destacado</div>
+                    <h2 class="section-title reveal reveal-delay-1">Selección actual</h2>
+                </div>
+                <a href="#contacto" class="btn btn-dark reveal reveal-delay-2">Ver Todo el Inventario</a>
+            </div>
+            <div class="inventory-grid">
+                <!-- Car 1 -->
+                <div class="car-card reveal">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&q=80" alt="BMW Serie 5" loading="lazy">
+                        <span class="car-card-badge">Destacado</span>
+                    </div>
+                    <div class="car-card-body">
+                        <div class="car-card-brand">BMW</div>
+                        <div class="car-card-name">Serie 5 530i M Sport</div>
+                        <div class="car-card-specs">
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+                                2022
+                            </span>
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+                                28,000 mi
+                            </span>
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                                Automático
+                            </span>
+                        </div>
+                        <div class="car-card-divider"></div>
+                        <div class="car-card-price">$38,900</div>
+                    </div>
+                </div>
+                <!-- Car 2 -->
+                <div class="car-card reveal reveal-delay-1">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=80" alt="Mercedes C-Class" loading="lazy">
+                        <span class="car-card-badge">Nuevo Ingreso</span>
+                    </div>
+                    <div class="car-card-body">
+                        <div class="car-card-brand">Mercedes-Benz</div>
+                        <div class="car-card-name">C 300 AMG Line</div>
+                        <div class="car-card-specs">
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+                                2023
+                            </span>
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+                                15,200 mi
+                            </span>
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                                Automático
+                            </span>
+                        </div>
+                        <div class="car-card-divider"></div>
+                        <div class="car-card-price">$42,500</div>
+                    </div>
+                </div>
+                <!-- Car 3 -->
+                <div class="car-card reveal reveal-delay-2">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=80" alt="Audi A5" loading="lazy">
+                    </div>
+                    <div class="car-card-body">
+                        <div class="car-card-brand">Audi</div>
+                        <div class="car-card-name">A5 Sportback Premium Plus</div>
+                        <div class="car-card-specs">
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+                                2021
+                            </span>
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+                                34,500 mi
+                            </span>
+                            <span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                                Automático
+                            </span>
+                        </div>
+                        <div class="car-card-divider"></div>
+                        <div class="car-card-price">$35,700</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section class="why">
+        <div class="container">
+            <div class="why-header">
+                <div class="section-label reveal" style="color: var(--gray-500);">Por qué Elegirnos</div>
+                <h2 class="section-title light reveal reveal-delay-1">La diferencia VS</h2>
+            </div>
+            <div class="why-grid">
+                <div class="why-card reveal">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+                    </div>
+                    <h3>Inspección 150+ Puntos</h3>
+                    <p>Cada vehículo pasa por una revisión exhaustiva antes de llegar a nuestro inventario. Motor, transmisión, carrocería, electrónica — todo verificado.</p>
+                </div>
+                <div class="why-card reveal reveal-delay-1">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Garantía Incluida</h3>
+                    <p>Todos nuestros vehículos vienen con garantía mecánica. Conducís con la tranquilidad de saber que estás protegido.</p>
+                </div>
+                <div class="why-card reveal reveal-delay-2">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                    </div>
+                    <h3>Trato Personal</h3>
+                    <p>Sin presiones, sin trucos. Te asesoramos con honestidad para que encuentres el vehículo perfecto para tu estilo de vida y presupuesto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process" id="proceso">
+        <div class="container">
+            <div class="process-header">
+                <div class="section-label reveal">Cómo Funciona</div>
+                <h2 class="section-title reveal reveal-delay-1">Tu coche en 4 pasos</h2>
+            </div>
+            <div class="process-steps">
+                <div class="process-step reveal">
+                    <div class="process-number">01</div>
+                    <h3>Explora</h3>
+                    <p>Revisa nuestro inventario online o contáctanos con lo que buscas. Te ayudamos a encontrar opciones.</p>
+                </div>
+                <div class="process-step reveal reveal-delay-1">
+                    <div class="process-number">02</div>
+                    <h3>Visita</h3>
+                    <p>Agenda una cita y ven a ver el vehículo en persona. Sin compromisos, sin presión.</p>
+                </div>
+                <div class="process-step reveal reveal-delay-2">
+                    <div class="process-number">03</div>
+                    <h3>Prueba</h3>
+                    <p>Pruébalo en carretera. Siente el rendimiento, el confort y la calidad antes de decidir.</p>
+                </div>
+                <div class="process-step reveal reveal-delay-3">
+                    <div class="process-number">04</div>
+                    <h3>Conduce</h3>
+                    <p>Finalizamos el papeleo, te entregamos las llaves y empiezas a disfrutar tu nuevo coche.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="opiniones">
+        <div class="container">
+            <div class="testimonials-header">
+                <div class="section-label reveal">Opiniones</div>
+                <h2 class="section-title reveal reveal-delay-1">Lo que dicen nuestros clientes</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <p class="testimonial-text">"Increíble experiencia. El coche estaba exactamente como lo describieron — en condiciones impecables. El trato fue profesional y sin ninguna presión."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MR</div>
+                        <div>
+                            <div class="testimonial-name">Miguel R.</div>
+                            <div class="testimonial-detail">BMW Serie 3 — 2023</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-1">
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <p class="testimonial-text">"Llevaba meses buscando un Mercedes en buen estado y precio justo. VS Auto Group lo tenía. El proceso fue rápido, transparente y sin sorpresas."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AL</div>
+                        <div>
+                            <div class="testimonial-name">Ana L.</div>
+                            <div class="testimonial-detail">Mercedes C 300 — 2022</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-2">
+                    <div class="testimonial-stars">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <p class="testimonial-text">"Mi segundo coche comprado aquí. La confianza que te dan es real — no como otros dealers. Volveré sin duda para el próximo."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JD</div>
+                        <div>
+                            <div class="testimonial-name">Jorge D.</div>
+                            <div class="testimonial-detail">Audi Q5 — 2021</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="contacto">
+        <div class="container">
+            <div class="cta-content">
+                <div class="section-label reveal" style="color: var(--gray-500);">Contacto</div>
+                <h2 class="section-title light reveal reveal-delay-1">Tu próximo coche te espera</h2>
+                <p class="cta-sub reveal reveal-delay-2">Contáctanos hoy para agendar una visita a nuestro showroom o preguntarnos sobre cualquier vehículo de nuestro inventario.</p>
+                <div class="reveal reveal-delay-3">
+                    <a href="tel:+1234567890" class="btn btn-primary">Llamar Ahora</a>
+                </div>
+                <div class="cta-contact reveal reveal-delay-4">
+                    <div class="cta-contact-item">
+                        <div class="cta-contact-label">Teléfono</div>
+                        <div class="cta-contact-value"><a href="tel:+1234567890">(123) 456-7890</a></div>
+                    </div>
+                    <div class="cta-contact-item">
+                        <div class="cta-contact-label">Email</div>
+                        <div class="cta-contact-value"><a href="mailto:info@vsautogroup.com">info@vsautogroup.com</a></div>
+                    </div>
+                    <div class="cta-contact-item">
+                        <div class="cta-contact-label">Horario</div>
+                        <div class="cta-contact-value">Lun — Sáb: 9AM — 7PM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <img src="logo.png" alt="VS Auto Group" class="footer-logo">
+            <span class="footer-text">&copy; 2026 VS Auto Group. Todos los derechos reservados.</span>
+            <div class="footer-socials">
+                <a href="#" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+                <a href="#" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="#" aria-label="WhatsApp">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== Navigation scroll effect =====
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 80);
+        });
+
+        // ===== Mobile menu =====
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        const navClose = document.getElementById('navClose');
+
+        navToggle.addEventListener('click', () => navLinks.classList.add('active'));
+        navClose.addEventListener('click', () => navLinks.classList.remove('active'));
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+
+        // ===== Reveal on scroll =====
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // ===== Counter animation =====
+        const counters = document.querySelectorAll('[data-count]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.count);
+                    const suffix = el.dataset.suffix || '';
+                    const duration = 2000;
+                    const start = performance.now();
+
+                    const animate = (now) => {
+                        const progress = Math.min((now - start) / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        el.textContent = Math.round(target * eased) + suffix;
+                        if (progress < 1) requestAnimationFrame(animate);
+                    };
+                    requestAnimationFrame(animate);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(el => counterObserver.observe(el));
+
+        // ===== Smooth scroll for anchor links =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
