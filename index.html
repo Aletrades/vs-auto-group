@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VS Auto Group — Vehículos Premium Revisados</title>
-    <meta name="description" content="VS Auto Group: Venta de vehículos premium usados en excelente estado. BMW, Mercedes-Benz, Audi. Revisión de 150 puntos antes de cada venta.">
+    <title>VS Auto Group — Vehículos Premium desde Alemania</title>
+    <meta name="description" content="VS Auto Group: Importamos vehículos premium de único dueño desde Alemania. BMW, Mercedes-Benz, Audi. Revisión de 150 puntos, máxima calidad al mejor precio.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --black: #0a0a0a;
-            --dark: #141414;
+            --dark: #111;
             --gray-900: #1a1a1a;
             --gray-800: #2a2a2a;
             --gray-700: #3a3a3a;
@@ -22,10 +22,12 @@
             --gray-400: #999;
             --gray-300: #bbb;
             --gray-200: #ddd;
-            --gray-100: #f2f2f2;
+            --gray-100: #f3f3f3;
             --white: #ffffff;
+            --cream: #faf9f7;
+            --warm: #f5f0eb;
             --font-body: 'Inter', -apple-system, sans-serif;
-            --font-display: 'Playfair Display', Georgia, serif;
+            --font-display: 'Cormorant Garamond', Georgia, serif;
         }
 
         html { scroll-behavior: smooth; }
@@ -45,13 +47,11 @@
         /* ===== NAV ===== */
         .nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             z-index: 1000;
             padding: 16px 0;
-            transition: all 0.4s ease;
             background: var(--white);
+            transition: all 0.4s ease;
         }
         .nav.scrolled {
             background: rgba(255,255,255,0.97);
@@ -67,8 +67,8 @@
             align-items: center;
             justify-content: space-between;
         }
-        .nav-logo { height: 40px; transition: height 0.3s; }
-        .nav.scrolled .nav-logo { height: 32px; }
+        .nav-logo { height: 42px; transition: height 0.3s; }
+        .nav.scrolled .nav-logo { height: 34px; }
         .nav-links {
             display: flex;
             align-items: center;
@@ -77,7 +77,7 @@
         }
         .nav-links a {
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 500;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -94,7 +94,6 @@
             background: var(--black) !important;
             color: var(--white) !important;
         }
-
         .nav-toggle {
             display: none;
             flex-direction: column;
@@ -112,129 +111,275 @@
             transition: all 0.3s;
         }
 
-        /* ===== HERO — SPLIT SCREEN ===== */
-        .hero {
+        /* ===== HERO — LOGO + INTRO ===== */
+        .hero-logo {
             margin-top: 72px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: calc(100vh - 72px);
+            padding: 64px 0 0;
+            text-align: center;
+            background: var(--white);
         }
-        .hero-panel {
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: flex-end;
-            cursor: pointer;
+        .hero-logo img {
+            height: 100px;
+            margin-bottom: 24px;
         }
-        .hero-panel-bg {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .hero-panel:hover .hero-panel-bg {
-            transform: scale(1.04);
-        }
-        .hero-panel-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.0) 100%);
-        }
-        .hero-panel-content {
-            position: relative;
-            z-index: 2;
-            padding: 48px 40px;
-            width: 100%;
-        }
-        .hero-panel-brand {
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        .hero-panel-name {
+        .hero-tagline {
             font-family: var(--font-display);
-            font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-            font-weight: 600;
-            color: var(--white);
-            margin-bottom: 12px;
-        }
-        .hero-panel-specs {
-            display: flex;
-            gap: 20px;
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.6);
-        }
-        .hero-panel-price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--white);
-            margin-top: 16px;
-        }
-        .hero-panel-left .hero-panel-bg {
-            background-image: url('https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=1200&q=85');
-        }
-        .hero-panel-right .hero-panel-bg {
-            background-image: url('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1200&q=85');
-        }
-        .hero-divider {
-            position: absolute;
-            left: 50%;
-            top: 72px;
-            bottom: 0;
-            width: 1px;
-            background: rgba(255,255,255,0.15);
-            z-index: 10;
-            pointer-events: none;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--gray-500);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-style: italic;
         }
 
-        /* ===== TRUST BANNER ===== */
-        .trust {
+        /* ===== OUR STORY ===== */
+        .story {
+            padding: 80px 0 100px;
+            background: var(--white);
+        }
+        .story-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .story-text {}
+        .story-label {
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .story-label::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--gray-300);
+        }
+        .story-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 600;
+            color: var(--black);
+            line-height: 1.15;
+            margin-bottom: 32px;
+        }
+        .story-title em {
+            font-style: italic;
+            font-weight: 400;
+        }
+        .story-body p {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            line-height: 1.9;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .story-body p strong {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        .story-highlight {
+            margin-top: 36px;
+            padding: 28px 32px;
+            background: var(--cream);
+            border-left: 3px solid var(--black);
+        }
+        .story-highlight p {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--gray-800);
+            line-height: 1.6;
+            font-style: italic;
+            margin: 0 !important;
+        }
+        .story-image {
+            position: relative;
+        }
+        .story-image img {
+            width: 100%;
+            height: 580px;
+            object-fit: cover;
+        }
+        .story-image-badge {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
             background: var(--black);
+            color: var(--white);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .story-image-badge-number {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .story-image-badge-text {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        /* ===== VALUES STRIP ===== */
+        .values {
             padding: 48px 0;
+            background: var(--black);
+        }
+        .values-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
             text-align: center;
         }
-        .trust-inner {
-            max-width: 800px;
+        .value-item {}
+        .value-icon {
+            margin-bottom: 16px;
+        }
+        .value-icon svg { width: 28px; height: 28px; stroke: var(--white); fill: none; stroke-width: 1.5; }
+        .value-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+        .value-desc {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        /* ===== FEATURED CAR ===== */
+        .featured {
+            padding: 100px 0;
+            background: var(--cream);
+        }
+        .featured-inner {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
-        .trust-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .featured-label {
+            text-align: center;
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            font-weight: 600;
+            margin-bottom: 12px;
         }
-        .trust-icon svg { width: 36px; height: 36px; stroke: var(--white); fill: none; stroke-width: 1.5; }
-        .trust-text {
+        .featured-title {
+            text-align: center;
             font-family: var(--font-display);
-            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-            color: var(--white);
-            font-weight: 500;
-            line-height: 1.5;
-            font-style: italic;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 56px;
         }
-        .trust-sub {
-            font-size: 0.8rem;
-            color: var(--gray-500);
-            margin-top: 16px;
+        .featured-gallery {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .featured-img {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        .featured-img-main { position: relative; overflow: hidden; }
+        .featured-img-main img { height: 480px; }
+        .featured-img-interior { position: relative; overflow: hidden; }
+        .featured-img-interior img { height: 480px; }
+        .featured-badge-best {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--black);
+            color: var(--white);
+            padding: 8px 18px;
+            font-size: 0.68rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
         }
-
-        /* ===== SECTION COMMON ===== */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-        .section-label {
-            font-size: 0.7rem;
+        .featured-badge-best svg { width: 14px; height: 14px; fill: #FFD700; }
+        .featured-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 8px;
+        }
+        .featured-info-left {}
+        .featured-car-brand {
+            font-size: 0.68rem;
             letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--gray-500);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .featured-car-name {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 12px;
+        }
+        .featured-car-specs {
+            display: flex;
+            gap: 24px;
+            font-size: 0.82rem;
+            color: var(--gray-500);
+        }
+        .featured-car-specs span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .featured-car-price {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        /* ===== INVENTORY ===== */
+        .inventory {
+            padding: 100px 0;
+            background: var(--white);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gray-400);
             font-weight: 600;
             margin-bottom: 12px;
         }
@@ -245,133 +390,24 @@
             color: var(--black);
             line-height: 1.2;
         }
-
-        /* ===== REVEAL ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-
-        /* ===== ABOUT ===== */
-        .about {
-            padding: 100px 0;
-            background: var(--white);
-        }
-        .about-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 72px;
-        }
-        .about-header p {
-            color: var(--gray-600);
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-top: 20px;
-            font-weight: 300;
-        }
-
-        .about-checks {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-bottom: 72px;
-        }
-        .check-card {
-            padding: 40px 32px;
-            border: 1px solid var(--gray-200);
-            transition: border-color 0.3s, transform 0.3s;
-        }
-        .check-card:hover {
-            border-color: var(--gray-400);
-            transform: translateY(-4px);
-        }
-        .check-icon {
-            width: 44px;
-            height: 44px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .check-icon svg { width: 28px; height: 28px; stroke: var(--black); fill: none; stroke-width: 1.5; }
-        .check-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--black);
-            margin-bottom: 12px;
-        }
-        .check-card p {
-            font-size: 0.88rem;
-            color: var(--gray-600);
-            line-height: 1.7;
-            font-weight: 300;
-        }
-
-        .about-brands {
-            text-align: center;
-            padding-top: 56px;
-            border-top: 1px solid var(--gray-200);
-        }
-        .about-brands-label {
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gray-500);
-            font-weight: 600;
-            margin-bottom: 32px;
-        }
-        .about-brands-list {
-            display: flex;
-            justify-content: center;
-            gap: 56px;
-            flex-wrap: wrap;
-        }
-        .about-brand {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--gray-300);
-            transition: color 0.3s;
-            letter-spacing: 1px;
-        }
-        .about-brand:hover { color: var(--black); }
-
-        /* ===== INVENTORY ===== */
-        .inventory {
-            padding: 100px 0;
-            background: var(--gray-100);
-        }
         .inventory-header {
             text-align: center;
             margin-bottom: 56px;
+        }
+        .inventory-sub {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            margin-top: 16px;
+            font-weight: 300;
         }
         .inventory-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
-        .inventory-grid .car-card:nth-child(4),
-        .inventory-grid .car-card:nth-child(5) {
-            /* center last two */
-        }
-        .inventory-bottom {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            margin-top: 24px;
-            max-width: 808px;
-            margin-left: auto;
-            margin-right: auto;
-        }
         .car-card {
             background: var(--white);
+            border: 1px solid var(--gray-200);
             overflow: hidden;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
         }
@@ -393,7 +429,7 @@
         .car-card:hover .car-card-image img { transform: scale(1.05); }
         .car-card-body { padding: 24px; }
         .car-card-brand {
-            font-size: 0.65rem;
+            font-size: 0.63rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--gray-500);
@@ -402,38 +438,29 @@
         }
         .car-card-name {
             font-family: var(--font-display);
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--black);
             margin-bottom: 12px;
         }
         .car-card-specs {
             display: flex;
-            gap: 16px;
-            font-size: 0.78rem;
+            gap: 14px;
+            font-size: 0.76rem;
             color: var(--gray-500);
             margin-bottom: 16px;
             flex-wrap: wrap;
         }
-        .car-card-specs span { display: flex; align-items: center; gap: 5px; }
-        .car-card-divider {
-            height: 1px;
-            background: var(--gray-200);
-            margin-bottom: 16px;
-        }
-        .car-card-price {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--black);
-        }
-        .car-card-badge {
+        .car-card-divider { height: 1px; background: var(--gray-200); margin-bottom: 16px; }
+        .car-card-price { font-size: 1.15rem; font-weight: 700; color: var(--black); }
+        .car-card-tag {
             position: absolute;
             top: 14px;
             left: 14px;
             padding: 5px 12px;
             background: var(--black);
             color: var(--white);
-            font-size: 0.65rem;
+            font-size: 0.63rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 600;
@@ -442,12 +469,9 @@
         /* ===== REVIEWS ===== */
         .reviews {
             padding: 100px 0;
-            background: var(--white);
+            background: var(--cream);
         }
-        .reviews-header {
-            text-align: center;
-            margin-bottom: 56px;
-        }
+        .reviews-header { text-align: center; margin-bottom: 56px; }
         .reviews-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -455,40 +479,27 @@
         }
         .review-card {
             padding: 36px;
+            background: var(--white);
             border: 1px solid var(--gray-200);
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, transform 0.3s;
         }
-        .review-card:hover { border-color: var(--gray-400); }
-        .review-stars {
-            display: flex;
-            gap: 3px;
-            margin-bottom: 20px;
-        }
+        .review-card:hover { border-color: var(--gray-400); transform: translateY(-4px); }
+        .review-stars { display: flex; gap: 3px; margin-bottom: 20px; }
         .review-stars svg { width: 15px; height: 15px; fill: var(--black); }
         .review-text {
             font-size: 0.92rem;
             color: var(--gray-600);
             line-height: 1.8;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             font-style: italic;
             font-weight: 300;
         }
-        .review-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .review-author { display: flex; align-items: center; gap: 14px; }
         .review-avatar {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: var(--gray-100);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: var(--gray-600);
+            object-fit: cover;
         }
         .review-name { font-weight: 600; font-size: 0.88rem; color: var(--black); }
         .review-detail { font-size: 0.72rem; color: var(--gray-500); margin-top: 2px; }
@@ -499,10 +510,7 @@
             background: var(--black);
             text-align: center;
         }
-        .cta-content {
-            max-width: 560px;
-            margin: 0 auto;
-        }
+        .cta-content { max-width: 560px; margin: 0 auto; }
         .cta .section-title { color: var(--white); margin-bottom: 20px; }
         .cta-sub {
             font-size: 0.95rem;
@@ -516,7 +524,7 @@
             align-items: center;
             gap: 10px;
             padding: 16px 36px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -526,38 +534,13 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             font-family: var(--font-body);
         }
-        .btn-white {
-            background: var(--white);
-            color: var(--black);
-        }
+        .btn-white { background: var(--white); color: var(--black); }
         .btn-white:hover { background: var(--gray-200); transform: translateY(-2px); }
-        .cta-contact {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            margin-top: 48px;
-            flex-wrap: wrap;
-        }
-        .cta-contact-label {
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gray-600);
-            margin-bottom: 6px;
-        }
-        .cta-contact-value {
-            color: var(--white);
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-        .cta-contact-value a { color: var(--white); text-decoration: none; transition: opacity 0.3s; }
-        .cta-contact-value a:hover { opacity: 0.7; }
-
         .btn-whatsapp {
             background: #25D366;
             color: var(--white);
             padding: 16px 36px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -569,14 +552,31 @@
             font-family: var(--font-body);
             border: none;
             cursor: pointer;
-            margin-left: 16px;
         }
         .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
         .btn-whatsapp svg { width: 18px; height: 18px; fill: var(--white); }
+        .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .cta-contact {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+        .cta-contact-label {
+            font-size: 0.63rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 6px;
+        }
+        .cta-contact-value { color: var(--white); font-size: 0.95rem; font-weight: 500; }
+        .cta-contact-value a { color: var(--white); text-decoration: none; transition: opacity 0.3s; }
+        .cta-contact-value a:hover { opacity: 0.7; }
 
         /* ===== FOOTER ===== */
         .footer {
-            padding: 36px 0;
+            padding: 32px 0;
             background: var(--black);
             border-top: 1px solid rgba(255,255,255,0.06);
         }
@@ -589,18 +589,32 @@
             align-items: center;
         }
         .footer-logo { height: 28px; filter: brightness(0) invert(1); opacity: 0.4; }
-        .footer-text { font-size: 0.72rem; color: var(--gray-600); letter-spacing: 1px; }
+        .footer-text { font-size: 0.7rem; color: var(--gray-600); letter-spacing: 1px; }
         .footer-socials { display: flex; gap: 16px; }
         .footer-socials a { color: var(--gray-600); transition: color 0.3s; }
         .footer-socials a:hover { color: var(--white); }
         .footer-socials svg { width: 16px; height: 16px; fill: currentColor; }
 
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
         /* ===== MOBILE ===== */
         @media (max-width: 1024px) {
-            .about-checks { grid-template-columns: repeat(2, 1fr); }
+            .story-inner { grid-template-columns: 1fr; gap: 48px; }
+            .story-image img { height: 400px; }
+            .featured-gallery { grid-template-columns: 1fr; }
+            .featured-img-main img, .featured-img-interior img { height: 350px; }
             .inventory-grid { grid-template-columns: repeat(2, 1fr); }
-            .inventory-bottom { grid-template-columns: 1fr; max-width: 392px; }
             .reviews-grid { grid-template-columns: 1fr 1fr; }
+            .values-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
         }
 
         @media (max-width: 768px) {
@@ -628,17 +642,16 @@
             }
             .nav-links.active .mobile-close { display: block; }
 
-            .hero {
-                grid-template-columns: 1fr;
-                min-height: auto;
-            }
-            .hero-panel { min-height: 50vh; }
-            .hero-divider { display: none; }
-            .about-checks { grid-template-columns: 1fr; }
+            .hero-logo img { height: 72px; }
+            .story-inner { grid-template-columns: 1fr; gap: 40px; }
+            .story-image img { height: 320px; }
+            .story-image { order: -1; }
+            .featured-gallery { grid-template-columns: 1fr; }
+            .featured-img-main img, .featured-img-interior img { height: 280px; }
+            .featured-info { flex-direction: column; gap: 20px; align-items: flex-start; }
             .inventory-grid { grid-template-columns: 1fr; }
-            .inventory-bottom { grid-template-columns: 1fr; max-width: 100%; }
             .reviews-grid { grid-template-columns: 1fr; }
-            .about-brands-list { gap: 32px; }
+            .values-grid { grid-template-columns: 1fr; gap: 32px; }
             .cta-contact { flex-direction: column; gap: 20px; }
             .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
         }
@@ -652,7 +665,7 @@
             <img src="logo.png" alt="VS Auto Group" class="nav-logo">
             <ul class="nav-links" id="navLinks">
                 <button class="mobile-close" id="navClose">&times;</button>
-                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#historia">Nuestra Historia</a></li>
                 <li><a href="#inventario">Inventario</a></li>
                 <li><a href="#opiniones">Opiniones</a></li>
                 <li><a href="#contacto" class="nav-cta-link">Contacto</a></li>
@@ -663,117 +676,108 @@
         </div>
     </nav>
 
-    <!-- HERO — SPLIT SCREEN -->
-    <section class="hero">
-        <div class="hero-divider"></div>
-        <div class="hero-panel hero-panel-left">
-            <div class="hero-panel-bg"></div>
-            <div class="hero-panel-overlay"></div>
-            <div class="hero-panel-content">
-                <div class="hero-panel-brand">BMW</div>
-                <div class="hero-panel-name">M4 Competition</div>
-                <div class="hero-panel-specs">
-                    <span>2018</span>
-                    <span>·</span>
-                    <span>62.000 km</span>
-                    <span>·</span>
-                    <span>450 CV</span>
+    <!-- HERO LOGO -->
+    <section class="hero-logo">
+        <img src="logo.png" alt="VS Auto Group" class="reveal">
+        <p class="hero-tagline reveal reveal-delay-1">Premium desde Alemania</p>
+    </section>
+
+    <!-- OUR STORY -->
+    <section class="story" id="historia">
+        <div class="story-inner">
+            <div class="story-text">
+                <div class="story-label reveal">Nuestra Historia</div>
+                <h2 class="story-title reveal reveal-delay-1">No buscamos coches.<br>Los <em>elegimos</em>.</h2>
+                <div class="story-body">
+                    <p class="reveal reveal-delay-2">En VS Auto Group hacemos las cosas de forma diferente. <strong>Viajamos personalmente a Alemania</strong> para seleccionar cada vehículo que vendemos. ¿Por qué Alemania? Porque el conductor alemán cuida su coche como pocos en Europa — mantenimientos al día, garaje cerrado, conducción responsable.</p>
+                    <p class="reveal reveal-delay-2">Solo compramos vehículos de <strong>único dueño</strong>. Los inspeccionamos en persona, verificamos su historial completo, comprobamos que no hayan tenido accidentes y revisamos cada detalle antes de tomar la decisión. Si algo no encaja, no lo compramos. Así de simple.</p>
+                    <p class="reveal reveal-delay-2">En Alemania, la alta demanda hace que los propietarios vendan sus coches relativamente pronto y a precios competitivos. Eso nos permite traer vehículos premium en un estado excepcional y <strong>ofrecerte precios que difícilmente encontrarás en el mercado español</strong> para la misma calidad.</p>
+                    <p class="reveal reveal-delay-2">Por eso mantenemos solo <strong>4 vehículos en stock</strong> a la vez. No buscamos volumen — buscamos que cada coche que entregamos sea una garantía de calidad, un vehículo que nosotros mismos conduciríamos con total confianza.</p>
                 </div>
-                <div class="hero-panel-price">42.900 €</div>
+                <div class="story-highlight reveal reveal-delay-3">
+                    <p>"Cada vehículo pasa por nuestra revisión de 150 puntos. Motor, electrónica, carrocería, historial — si no cumple nuestro estándar, no lo vendemos."</p>
+                </div>
             </div>
-        </div>
-        <div class="hero-panel hero-panel-right">
-            <div class="hero-panel-bg"></div>
-            <div class="hero-panel-overlay"></div>
-            <div class="hero-panel-content">
-                <div class="hero-panel-brand">Mercedes-Benz</div>
-                <div class="hero-panel-name">CLA 200 AMG Line</div>
-                <div class="hero-panel-specs">
-                    <span>2020</span>
-                    <span>·</span>
-                    <span>48.000 km</span>
-                    <span>·</span>
-                    <span>163 CV</span>
+            <div class="story-image reveal">
+                <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=85" alt="Vehículo premium en showroom">
+                <div class="story-image-badge">
+                    <div class="story-image-badge-number">150</div>
+                    <div class="story-image-badge-text">Puntos de<br>inspección</div>
                 </div>
-                <div class="hero-panel-price">28.500 €</div>
             </div>
         </div>
     </section>
 
-    <!-- TRUST BANNER -->
-    <section class="trust">
-        <div class="trust-inner reveal">
-            <div class="trust-icon">
-                <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+    <!-- VALUES -->
+    <section class="values">
+        <div class="values-grid">
+            <div class="value-item reveal">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16"/></svg>
+                </div>
+                <div class="value-title">Importación Directa</div>
+                <div class="value-desc">De Alemania a tu puerta</div>
             </div>
-            <p class="trust-text">"Cada vehículo que vendemos pasa por una revisión exhaustiva de 150 puntos antes de llegar a tus manos. No entregamos coches — entregamos confianza."</p>
-            <p class="trust-sub">VS Auto Group — Garantía de Calidad</p>
+            <div class="value-item reveal reveal-delay-1">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+                <div class="value-title">Único Dueño</div>
+                <div class="value-desc">Historial limpio y verificado</div>
+            </div>
+            <div class="value-item reveal reveal-delay-2">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="value-title">150 Puntos</div>
+                <div class="value-desc">Inspección exhaustiva</div>
+            </div>
+            <div class="value-item reveal reveal-delay-3">
+                <div class="value-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                <div class="value-title">Solo Premium</div>
+                <div class="value-desc">BMW, Mercedes, Audi</div>
+            </div>
         </div>
     </section>
 
-    <!-- ABOUT -->
-    <section class="about" id="nosotros">
-        <div class="container">
-            <div class="about-header reveal">
-                <div class="section-label">Sobre Nosotros</div>
-                <h2 class="section-title">El estándar que<br>nos define</h2>
-                <p>En VS Auto Group no compramos para revender. Seleccionamos. Cada vehículo que entra en nuestro catálogo ha sido elegido por su estado, su historial y su calidad mecánica. Trabajamos exclusivamente con marcas premium porque creemos que la excelencia no se negocia.</p>
-            </div>
-
-            <div class="about-checks">
-                <div class="check-card reveal">
-                    <div class="check-icon">
-                        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
-                    </div>
-                    <h3>Inspección Mecánica Completa</h3>
-                    <p>Motor, transmisión, suspensión, frenos, dirección y sistema de escape. Cada componente se revisa en profundidad para garantizar un rendimiento óptimo y sin sorpresas.</p>
+    <!-- FEATURED CAR -->
+    <section class="featured" id="destacado">
+        <div class="featured-inner">
+            <div class="featured-label reveal">Mejor Coche en Stock</div>
+            <h2 class="featured-title reveal reveal-delay-1">Nuestra selección destacada</h2>
+            <div class="featured-gallery reveal reveal-delay-2">
+                <div class="featured-img-main">
+                    <span class="featured-badge-best">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Mejor en Stock
+                    </span>
+                    <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=1000&q=85" alt="Mercedes Clase A 180d AMG - Exterior" class="featured-img">
                 </div>
-                <div class="check-card reveal reveal-delay-1">
-                    <div class="check-icon">
-                        <svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-                    </div>
-                    <h3>Diagnóstico Electrónico</h3>
-                    <p>Conectamos cada vehículo a equipos profesionales de diagnóstico para verificar la centralita, sensores, sistemas de seguridad y electrónica avanzada. Cero errores ocultos.</p>
-                </div>
-                <div class="check-card reveal reveal-delay-2">
-                    <div class="check-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
-                    <h3>Verificación de Carrocería</h3>
-                    <p>Medición de espesores de pintura, detección de reparaciones previas y comprobación estructural. Solo ofrecemos vehículos con carrocería en estado impecable.</p>
-                </div>
-                <div class="check-card reveal">
-                    <div class="check-icon">
-                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                    </div>
-                    <h3>Historial Documentado</h3>
-                    <p>Revisamos el historial completo de cada unidad: mantenimientos realizados, kilometraje verificado y titularidad transparente. Sin incógnitas, sin letra pequeña.</p>
-                </div>
-                <div class="check-card reveal reveal-delay-1">
-                    <div class="check-icon">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    </div>
-                    <h3>Prueba en Carretera</h3>
-                    <p>Cada vehículo se prueba en condiciones reales: autopista, ciudad y maniobras. Evaluamos comportamiento dinámico, ruidos, vibraciones y respuesta de todos los sistemas.</p>
-                </div>
-                <div class="check-card reveal reveal-delay-2">
-                    <div class="check-icon">
-                        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </div>
-                    <h3>Preparación Final Premium</h3>
-                    <p>Antes de la entrega, cada coche pasa por un detailing profesional completo: interior, exterior, tapicería y cristales. Lo recibes como si fuera nuevo.</p>
+                <div class="featured-img-interior">
+                    <img src="https://images.unsplash.com/photo-1583267746897-2cf415887172?w=1000&q=85" alt="Mercedes Clase A 180d AMG - Interior" class="featured-img">
                 </div>
             </div>
-
-            <div class="about-brands reveal">
-                <div class="about-brands-label">Trabajamos Exclusivamente con Marcas Premium</div>
-                <div class="about-brands-list">
-                    <span class="about-brand">BMW</span>
-                    <span class="about-brand">Mercedes-Benz</span>
-                    <span class="about-brand">Audi</span>
-                    <span class="about-brand">Porsche</span>
-                    <span class="about-brand">Lexus</span>
+            <div class="featured-info reveal reveal-delay-3">
+                <div class="featured-info-left">
+                    <div class="featured-car-brand">Mercedes-Benz</div>
+                    <div class="featured-car-name">Clase A 180d AMG Line</div>
+                    <div class="featured-car-specs">
+                        <span>2021</span>
+                        <span>·</span>
+                        <span>50.000 km</span>
+                        <span>·</span>
+                        <span>Diésel</span>
+                        <span>·</span>
+                        <span>116 CV</span>
+                        <span>·</span>
+                        <span>Negro</span>
+                        <span>·</span>
+                        <span>Único dueño</span>
+                    </div>
                 </div>
+                <div class="featured-car-price">22.500 €</div>
             </div>
         </div>
     </section>
@@ -784,34 +788,14 @@
             <div class="inventory-header">
                 <div class="section-label reveal">Inventario Actual</div>
                 <h2 class="section-title reveal reveal-delay-1">Nuestros vehículos disponibles</h2>
+                <p class="inventory-sub reveal reveal-delay-2">Siempre 4 unidades en stock — cada una seleccionada personalmente en Alemania.</p>
             </div>
             <div class="inventory-grid">
-                <!-- 1: Clase A 180d -->
+                <!-- Audi Q3 Sportback -->
                 <div class="car-card reveal">
                     <div class="car-card-image">
-                        <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80" alt="Mercedes Clase A 180d" loading="lazy">
-                    </div>
-                    <div class="car-card-body">
-                        <div class="car-card-brand">Mercedes-Benz</div>
-                        <div class="car-card-name">Clase A 180d</div>
-                        <div class="car-card-specs">
-                            <span>2021</span>
-                            <span>·</span>
-                            <span>55.000 km</span>
-                            <span>·</span>
-                            <span>Diésel</span>
-                            <span>·</span>
-                            <span>116 CV</span>
-                        </div>
-                        <div class="car-card-divider"></div>
-                        <div class="car-card-price">22.900 €</div>
-                    </div>
-                </div>
-                <!-- 2: Audi Q3 Sportback -->
-                <div class="car-card reveal reveal-delay-1">
-                    <div class="car-card-image">
-                        <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=80" alt="Audi Q3 Sportback" loading="lazy">
-                        <span class="car-card-badge">Nuevo Ingreso</span>
+                        <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=600&q=80" alt="Audi Q3 Sportback" loading="lazy">
+                        <span class="car-card-tag">Nuevo Ingreso</span>
                     </div>
                     <div class="car-card-body">
                         <div class="car-card-brand">Audi</div>
@@ -829,11 +813,10 @@
                         <div class="car-card-price">31.500 €</div>
                     </div>
                 </div>
-                <!-- 3: BMW M4 -->
-                <div class="car-card reveal reveal-delay-2">
+                <!-- BMW M4 -->
+                <div class="car-card reveal reveal-delay-1">
                     <div class="car-card-image">
                         <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=600&q=80" alt="BMW M4 Competition" loading="lazy">
-                        <span class="car-card-badge">Destacado</span>
                     </div>
                     <div class="car-card-body">
                         <div class="car-card-brand">BMW</div>
@@ -851,31 +834,8 @@
                         <div class="car-card-price">42.900 €</div>
                     </div>
                 </div>
-            </div>
-            <div class="inventory-bottom">
-                <!-- 4: CLA 2020 -->
-                <div class="car-card reveal">
-                    <div class="car-card-image">
-                        <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=80" alt="Mercedes CLA 200" loading="lazy">
-                    </div>
-                    <div class="car-card-body">
-                        <div class="car-card-brand">Mercedes-Benz</div>
-                        <div class="car-card-name">CLA 200 AMG Line</div>
-                        <div class="car-card-specs">
-                            <span>2020</span>
-                            <span>·</span>
-                            <span>48.000 km</span>
-                            <span>·</span>
-                            <span>Gasolina</span>
-                            <span>·</span>
-                            <span>163 CV</span>
-                        </div>
-                        <div class="car-card-divider"></div>
-                        <div class="car-card-price">28.500 €</div>
-                    </div>
-                </div>
-                <!-- 5: BMW X2 -->
-                <div class="car-card reveal reveal-delay-1">
+                <!-- BMW X2 -->
+                <div class="car-card reveal reveal-delay-2">
                     <div class="car-card-image">
                         <img src="https://images.unsplash.com/photo-1622653902334-13ecf49e5087?w=600&q=80" alt="BMW X2" loading="lazy">
                     </div>
@@ -903,7 +863,7 @@
     <section class="reviews" id="opiniones">
         <div class="container">
             <div class="reviews-header">
-                <div class="section-label reveal">Opiniones</div>
+                <div class="section-label reveal">Opiniones Verificadas</div>
                 <h2 class="section-title reveal reveal-delay-1">Lo que dicen nuestros clientes</h2>
             </div>
             <div class="reviews-grid">
@@ -915,12 +875,12 @@
                         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     </div>
-                    <p class="review-text">"Víctor fue increíble. Respondió todas nuestras preguntas con total transparencia, nos ayudó a encontrar exactamente el coche que buscábamos y tras 6 meses de uso funciona de maravilla. Se nota que cuidan cada detalle."</p>
+                    <p class="review-text">"Víctor fue increíble durante todo el proceso. Respondió todas nuestras preguntas con total transparencia, nos consiguió exactamente el coche que buscábamos y tras 6 meses de uso funciona de maravilla. Se nota que cuidan cada detalle antes de entregar el vehículo."</p>
                     <div class="review-author">
-                        <div class="review-avatar">DR</div>
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Daniel R." class="review-avatar">
                         <div>
                             <div class="review-name">Daniel R.</div>
-                            <div class="review-detail">BMW M4 — Enero 2025</div>
+                            <div class="review-detail">BMW M4 — Julio 2025</div>
                         </div>
                     </div>
                 </div>
@@ -932,12 +892,12 @@
                         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     </div>
-                    <p class="review-text">"Compramos un Clase A y estamos encantados. La revisión que hacen antes de vender se nota — el coche estaba impecable. Trato cercano y profesional, sin las típicas presiones de un concesionario."</p>
+                    <p class="review-text">"Compramos un Clase A traído de Alemania y estamos encantados. El coche estaba impecable, mejor de lo que esperábamos. Trato cercano, sin presiones y todo el papeleo resuelto. Muy recomendable para quien busque calidad real."</p>
                     <div class="review-author">
-                        <div class="review-avatar">LM</div>
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="Laura M." class="review-avatar">
                         <div>
                             <div class="review-name">Laura M.</div>
-                            <div class="review-detail">Mercedes Clase A — Marzo 2025</div>
+                            <div class="review-detail">Mercedes Clase A — Noviembre 2025</div>
                         </div>
                     </div>
                 </div>
@@ -949,12 +909,12 @@
                         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     </div>
-                    <p class="review-text">"Muy atentos con Víctor al frente. Le dije lo que buscaba, mi presupuesto, y en menos de una semana tenía el Audi Q3 listo. Todo transparente, papeles perfectos y el coche en un estado brutal."</p>
+                    <p class="review-text">"Le dije a Víctor lo que buscaba y mi presupuesto, y en menos de dos semanas tenía un Q3 Sportback increíble esperándome. Todo transparente, papeles perfectos y el coche en un estado brutal. Volveré seguro."</p>
                     <div class="review-author">
-                        <div class="review-avatar">JP</div>
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" alt="Javier P." class="review-avatar">
                         <div>
                             <div class="review-name">Javier P.</div>
-                            <div class="review-detail">Audi Q3 Sportback — Febrero 2025</div>
+                            <div class="review-detail">Audi Q3 Sportback — Febrero 2026</div>
                         </div>
                     </div>
                 </div>
@@ -968,15 +928,15 @@
             <div class="cta-content">
                 <div class="section-label reveal" style="color: var(--gray-500);">Contacto</div>
                 <h2 class="section-title reveal reveal-delay-1">¿Buscas tu próximo coche?</h2>
-                <p class="cta-sub reveal reveal-delay-2">Cuéntanos qué necesitas y te ayudamos a encontrarlo. Sin compromisos, sin presión — solo buen asesoramiento.</p>
-                <div class="reveal reveal-delay-3" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 12px;">
+                <p class="cta-sub reveal reveal-delay-2">Cuéntanos qué necesitas y lo buscamos en Alemania para ti. Sin compromisos, sin presión — solo calidad y honestidad.</p>
+                <div class="cta-buttons reveal reveal-delay-3">
                     <a href="tel:+34646762253" class="btn btn-white">Llámanos</a>
                     <a href="https://wa.me/34646762253?text=Hola%2C%20me%20interesa%20un%20veh%C3%ADculo%20de%20VS%20Auto%20Group" target="_blank" class="btn-whatsapp">
                         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                         WhatsApp
                     </a>
                 </div>
-                <div class="cta-contact reveal reveal-delay-4">
+                <div class="cta-contact reveal reveal-delay-3">
                     <div>
                         <div class="cta-contact-label">Teléfono / WhatsApp</div>
                         <div class="cta-contact-value"><a href="tel:+34646762253">+34 646 762 253</a></div>
@@ -998,7 +958,7 @@
     <footer class="footer">
         <div class="footer-inner">
             <img src="logo.png" alt="VS Auto Group" class="footer-logo">
-            <span class="footer-text">&copy; 2025 VS Auto Group. Todos los derechos reservados.</span>
+            <span class="footer-text">&copy; 2026 VS Auto Group. Todos los derechos reservados.</span>
             <div class="footer-socials">
                 <a href="#" aria-label="Instagram">
                     <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
@@ -1029,7 +989,7 @@
             entries.forEach(e => {
                 if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
             });
-        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
         reveals.forEach(el => observer.observe(el));
 
         // Smooth scroll
